@@ -1,6 +1,7 @@
-# eufy RoboVac full power
+# eufy RoboVac full suction
 
-Keep a **eufy RoboVac L60** cleaning at full suction, by only letting it clean while the battery is between 100% and 80%.
+Keep a **eufy RoboVac** cleaning at full suction, by only letting it clean while the battery is between 100% and 80%.
+Tested on the **L60**; other recent eufy robots may work ([compatibility](#compatibility)).
 
 > Unofficial project. Not affiliated with, endorsed by or supported by Anker or eufy. "eufy" and "RoboVac" are their trademarks.
 > Use at your own risk; a firmware update could change or break any of this.
@@ -25,16 +26,26 @@ A "resume" afterwards starts a brand-new clean from the beginning, so the same p
 
 As a rough guide, one 100%→80% charge covered about 10–12 m² of a cluttered room in our tests. Your rooms will differ.
 
-## Tested on
+## Compatibility
 
-| | |
-|---|---|
-| Robot | eufy RoboVac L60 (model T2267), firmware 1.4.5 |
-| App | eufy Clean 3.20.0 |
-| PC | Windows 11, Python 3.13 |
+| Robot | Control works | Suction drop seen | Notes |
+|---|---|---|---|
+| L60 (T2267), firmware 1.4.5 | yes, tested | yes, below 80% | eufy Clean app 3.20.0 |
+| Other recent eufy robots (X8 Pro, X9 Pro, X10 Pro Omni, L60 Hybrid/SES, C20, ...) | unknown | unknown | likely use the same protocol; **reports wanted** |
+| Older robots (11S, 15C, 30C, G30, ...) | no | unknown | they use an older, different protocol |
 
-Other eufy robots that use the same protobuf-style data points (DP 152–179) may work but are untested. Reports are welcome.
-The Python scripts should run on macOS and Linux too; only the scheduler script is Windows-specific (use cron there).
+Only the L60 has been tested. The control side is not L60-specific: it uses eufy's newer protocol (protobuf messages on data points 152–179), which other recent models appear to share.
+What nobody knows yet is whether other models also lower their suction, and at what battery level.
+
+**Have a different model? Please test it and report back.** It takes a few minutes:
+
+1. Do setup step 1 below (`get_local_key.py`).
+2. Run `python read_status.py`. It is read-only. If it prints data points in the 152–179 range (battery on 163), the protocol matches.
+3. Try `python send_mode.py start 30`, then `python send_mode.py home`.
+4. Listen while the robot cleans from 100% down past 80%. Does the suction drop, and at what battery level? If it drops at another level, use `--low` (e.g. `--low 70`).
+5. Open a [compatibility report](../../issues/new?template=compatibility-report.yml), whether it worked or not.
+
+Tested with Windows 11 and Python 3.13. The Python scripts should run on macOS and Linux too; only the scheduler script is Windows-specific (use cron there).
 
 ## Setup
 

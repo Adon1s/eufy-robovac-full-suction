@@ -1,0 +1,73 @@
+name: Compatibility report
+description: Tell us whether these tools work on your robot (working or not, both help)
+title: "Compatibility: <model>"
+labels: ["compatibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing! **Before posting, remove personal details** from any output:
+        your local key, device ID, MAC address, IP address and Wi-Fi name.
+        Never attach `robot_config.json` or the `.log` files.
+  - type: input
+    id: model
+    attributes:
+      label: Robot model
+      description: Name and model number (the "T" number on the underside or in the app's device info)
+      placeholder: "RoboVac X8 Pro (T2266)"
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Firmware version
+      placeholder: "1.4.5"
+    validations:
+      required: true
+  - type: dropdown
+    id: key
+    attributes:
+      label: Did get_local_key.py find your robot and its key?
+      options: ["Yes", "Got the key but not the IP address", "No"]
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Did read_status.py show data points in the 152-179 range?
+      options: ["Yes", "No, different data points", "No, could not connect"]
+    validations:
+      required: true
+  - type: textarea
+    id: status_output
+    attributes:
+      label: read_status.py output
+      description: Paste the output. Remove the MAC address and Wi-Fi name (the "device" and "settings" lines).
+      render: text
+  - type: checkboxes
+    id: commands
+    attributes:
+      label: Which commands worked?
+      options:
+        - label: "send_mode.py start"
+        - label: "send_mode.py home"
+        - label: "send_mode.py room (room clean)"
+        - label: "probe_rooms.py found my room IDs"
+        - label: "full_power.py completed a run"
+  - type: dropdown
+    id: drop
+    attributes:
+      label: Does your robot's suction drop as the battery falls?
+      options: ["Yes", "No", "Not sure / not tested"]
+    validations:
+      required: true
+  - type: input
+    id: drop_level
+    attributes:
+      label: If yes, at what battery level?
+      placeholder: "80%"
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: Errors, odd behaviour, changes you had to make, operating system
