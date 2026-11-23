@@ -1,0 +1,15 @@
+# Private: holds the robot's local key, device ID and MAC
+robot_config.json
+# Logs: contain device details, Wi-Fi name and personal cleaning history
+*.log
+# eufy's app (copyrighted) and the test signing key - never publish
+eufy_apk/
+*.apk
+*.keystore
+keystore_password.txt
+# Python / tools
+__pycache__/
+*.pyc
+.venv/
+.idea/
+.claude/settings.local.json
